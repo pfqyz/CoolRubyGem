@@ -1,0 +1,2 @@
+# CoolRubyGem
+Markov algorithm
