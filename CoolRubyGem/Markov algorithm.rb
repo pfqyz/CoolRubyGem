@@ -14,13 +14,17 @@
 # (\n после каждого правила не обязателен, но желателен).
 
 require_relative 'rule.rb'
+require_relative 'system.rb'
 
-r = Rule.new('x->.yy')
+r = Rule.new('x->yy')
 w = 'xxyy'
 puts "Word: #{w}"
 puts "Rule: #{r}"
 puts "Result: #{r.result(w)}"
-
+puts "//////////////"
+s = System.new(['y->x','x->.yy'])
+puts "System: #{s}"
+puts "Result: #{s.result('xxyy')}"
 
 
 
