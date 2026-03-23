@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-def parse_file(file_path)
+def parsing(file_path)
   rules_arrays = []
   strings_arrays = []
   File.foreach(file_path, chomp: true) do |line|
