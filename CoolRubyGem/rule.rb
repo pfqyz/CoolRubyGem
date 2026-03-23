@@ -24,6 +24,8 @@ class Rule
 
   def result(word)
 
+    raise "The e symbol appears in the word! Error! Incorrect alphabet!" if word.include?('e')
+
     while can_be_used?(word)
       s = word
       if @x == 'e' && @y == 'e'
