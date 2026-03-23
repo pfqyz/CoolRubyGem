@@ -2,7 +2,15 @@
 class Rule
   def initialize(rule)
     @is_end = rule.match?(/->\./)
+
+    rule = rule.gsub(' ', '')
+
+    unless rule.match?(/^[a-zA-Z]+->\.?[a-zA-Z]*$/)
+      raise "Error! Incorrect rule format: '#{rule}'"
+    end
+
     rule = rule.gsub('.', '') if @is_end
+
     rule = rule.split('->')
     @x = rule[0]
     @y = rule[1]
@@ -22,7 +30,7 @@ class Rule
     word.match?(@x)
   end
 
-  def result(word)
+  def step_by_step_solution(word)
 
     raise "The e symbol appears in the word! Error! Incorrect alphabet!" if word.include?('e')
 
@@ -45,4 +53,23 @@ class Rule
     word
   end
 
+
+  def result(word)
+    raise "The e symbol appears in the word! Error! Incorrect alphabet!" if word.include?('e')
+
+    while can_be_used?(word)
+      if @x == 'e' && @y == 'e'
+        return "Looping has happened" unless is_end?
+      elsif @x == 'e'
+        word = @y + word
+        return "Looping has happened" unless is_end?
+      elsif @y == 'e'
+        word = word.sub(/#{@x}/, '')
+      else
+        word = word.sub(/#{@x}/, @y)
+      end
+      break if is_end?
+    end
+    word
+  end
 end
