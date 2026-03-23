@@ -19,6 +19,7 @@
 
 require_relative 'rule.rb'
 require_relative 'system.rb'
+require_relative 'parse.rb'
 
 r = Rule.new('x->yy')
 w = 'xxyy'
@@ -70,3 +71,30 @@ puts system.step_by_step_solution('xxyy')
 
 
 #s1 = System.new(['x->.y','e->y','x->.yy']) - проверка на правильность слова
+
+puts
+puts
+puts "//////Parsing file part////////"
+names_f =["BadFile.txt", "GoodFile.txt", "ErrorFile.txt"]
+names_f.each do |name|
+  puts "//////Parsing and test '#{name}' file////////"
+  rules_arrays, strings_arrays = parsing(name)
+
+  rules_arrays.each_with_index do |rules, idx|
+    puts "Система #{idx + 1}: { #{rules.join('; ')} }"
+
+    system = System.new(rules)
+
+    strings_arrays[idx].each do |word|
+      result = system.result(word)
+      puts "  #{word} -> #{result}"
+    end
+
+    puts
+  end
+
+rescue => e
+  puts "Ошибка: #{e.message}"
+
+end
+
