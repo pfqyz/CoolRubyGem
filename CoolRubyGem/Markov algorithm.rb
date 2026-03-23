@@ -13,3 +13,15 @@
 # каждое правило вида x -> y; или x ->. y; будет иметь такой и только такой вид
 # (\n после каждого правила не обязателен, но желателен).
 
+require_relative 'rule.rb'
+
+r = Rule.new('x->.yy')
+w = 'xxyy'
+puts "Word: #{w}"
+puts "Rule: #{r}"
+puts "Result: #{r.result(w)}"
+
+
+
+
+
