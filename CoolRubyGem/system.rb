@@ -25,10 +25,30 @@ class System
     str + '}'
   end
 
+  def step_by_step_solution(word)
+    w = word.dup
+    changed = true
+    while changed
+
+      changed = false
+
+      @rules.each do |r|
+        while r.can_be_used?(w)
+
+          w = r.step_by_step_solution(w)
+          return w if (w == "Looping has happened")
+          changed = true
+
+          return w if r.is_end?
+        end
+      end
+    end
+    w
+  end
+
   def result(word)
     w = word.dup
     changed = true
-    s =''
     while changed
 
       changed = false
