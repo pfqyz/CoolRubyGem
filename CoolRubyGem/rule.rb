@@ -18,12 +18,26 @@ class Rule
   end
 
   def can_be_used?(word)
+    return true if @x == 'e'
     word.match?(@x)
   end
 
   def result(word)
+
     while can_be_used?(word)
-      word = word.sub(/#{@x}/, @y)
+      s = word
+      if @x == 'e' && @y == 'e'
+        return "Looping has happened" unless is_end?
+      elsif @x == 'e'
+        word = @y + word
+        return "Looping has happened" unless is_end?
+      elsif @y == 'e'
+        word = word.sub(/#{@x}/, '')
+      else
+        word = word.sub(/#{@x}/, @y)
+      end
+      s = s + '->' + word
+      puts s
       break if is_end?
     end
     word

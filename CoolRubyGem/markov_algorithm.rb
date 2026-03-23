@@ -22,10 +22,32 @@ puts "Word: #{w}"
 puts "Rule: #{r}"
 puts "Result: #{r.result(w)}"
 puts "//////////////"
+r = Rule.new('e->.yy')
+puts "Word: #{w}"
+puts "Rule: #{r}"
+puts "Result: #{r.result(w)}"
+puts "//////////////"
+r = Rule.new('e->yy')
+puts "Word: #{w}"
+puts "Rule: #{r}"
+puts "Result: #{r.result(w)}"
+puts "//////////////"
 s = System.new(['y->x','x->.yy'])
 puts "System: #{s}"
-puts "Result: #{s.result('xxyy')}"
-
-
-
-
+puts "Word: #{w}"
+puts "Result: #{s.result(w)}"
+puts "//////////////"
+s = System.new(['x->y','y->.x','x->.yy'])
+puts "System: #{s}"
+puts "Word: #{w}"
+puts "Result: #{s.result(w)}"
+puts "//////////////"
+s = System.new(['x->y','e->y','x->.yy'])
+puts "System: #{s}"
+puts "Word: #{w}"
+puts "Result: #{s.result(w)}"
+puts "//////////////"
+s = System.new(['x->y','y->e','x->.yy'])
+puts "System: #{s}"
+puts "Word: #{w}"
+puts "Result: #{s.result(w)}"
