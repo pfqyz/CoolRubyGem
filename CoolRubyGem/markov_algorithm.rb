@@ -1,0 +1,64 @@
+# frozen_string_literal: true
+# Скажем, что систему уравнений мы будем обозначать так
+# {
+# ...
+# }
+# каждое правило из системы будет иметь вид:
+# x -> y; или x ->. y;
+# файл будет иметь вид:
+# система:{}
+# а затем слова для преобразования пример: aaa bbb ababa babab aabbaabbaabb
+# пока не встретиться другая система мы будем обрабатывать эти слова по прошлой системе
+# если она<другая система> встретилась, то считываем ее и обрабатываем следующие за ней слова
+# каждое правило вида x -> y; или x ->. y; будет иметь такой и только такой вид
+# (\n после каждого правила не обязателен, но желателен).
+# договоримся, что в славах не может быть символа e,
+# так как он нам понадобился для реализации пустого элемента в функциях
+# в случае его использования будет выброшено исключение
+
+require_relative 'rule.rb'
+require_relative 'system.rb'
+
+r = Rule.new('x->yy')
+w = 'xxyy'
+puts "Word: #{w}"
+puts "Rule: #{r}"
+puts "Result: #{r.result(w)}"
+puts "//////////////"
+r = Rule.new('e->.yy')
+puts "Word: #{w}"
+puts "Rule: #{r}"
+puts "Result: #{r.result(w)}"
+puts "//////////////"
+r = Rule.new('e->yy')
+puts "Word: #{w}"
+puts "Rule: #{r}"
+puts "Result: #{r.result(w)}"
+puts "//////////////"
+
+r = Rule.new('e->yy')
+#w1 = 'yyex' для проверки выбрасывания исключения
+puts "Word: #{w}"
+puts "Rule: #{r}"
+puts "Result: #{r.result(w)}"
+puts "//////////////"
+
+s = System.new(['y->x','x->.yy'])
+puts "System: #{s}"
+puts "Word: #{w}"
+puts "Result: #{s.result(w)}"
+puts "//////////////"
+s = System.new(['x->y','y->.x','x->.yy'])
+puts "System: #{s}"
+puts "Word: #{w}"
+puts "Result: #{s.result(w)}"
+puts "//////////////"
+s = System.new(['x->y','e->y','x->.yy'])
+puts "System: #{s}"
+puts "Word: #{w}"
+puts "Result: #{s.result(w)}"
+puts "//////////////"
+s = System.new(['x->y','y->e','x->.yy'])
+puts "System: #{s}"
+puts "Word: #{w}"
+puts "Result: #{s.result(w)}"
