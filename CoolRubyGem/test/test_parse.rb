@@ -1,9 +1,14 @@
 # frozen_string_literal: true
 require 'minitest/autorun'
-require_relative 'parse'
+
+require 'fileutils'
+
+require_relative '../lib/CoolRubyGem/parse'
+
+include CoolRubyGem
 class ParseFileTest < Minitest::Test
   def test_good_file
-    rules, strings = parsing('GoodFile.txt')
+    rules, strings = parsing('test/fixtures/GoodFile.txt')
     expected_rules = [
       ["ab->a", "b->e", "a->b"],
       ["ab->a", "b->.e", "a->b"],
@@ -19,7 +24,7 @@ class ParseFileTest < Minitest::Test
   end
 
   def test_bad_file_with_spaces
-    rules, strings = parsing('BadFile.txt')
+    rules, strings = parsing('test/fixtures/BadFile.txt')
     expected_rules = [
       ["ab->a", "b->e", "a->b"],
       ["ab->a", "b->.e", "a->b"],
@@ -35,7 +40,7 @@ class ParseFileTest < Minitest::Test
   end
 
   def test_error_file
-    error = assert_raises(RuntimeError) { parsing('ErrorFile.txt') }
+    error = assert_raises(RuntimeError) { parsing('test/fixtures/ErrorFile.txt') }
     assert_match(/Invalid line format/, error.message)
   end
 end

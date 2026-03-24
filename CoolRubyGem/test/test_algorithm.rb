@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 require 'minitest/autorun'
 
-require_relative 'rule.rb'
-require_relative 'system.rb'
+require_relative '../lib/CoolRubyGem/rule'
+require_relative '../lib/CoolRubyGem/system'
 
+include CoolRubyGem
 class TestRule < Minitest::Test
 
   def test_rule_creation

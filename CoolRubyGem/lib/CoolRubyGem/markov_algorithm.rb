@@ -19,7 +19,12 @@ module CoolRubyGem
   # договоримся, что в славах не может быть символа e,
   # так как он нам понадобился для реализации пустого элемента в функциях
   # в случае его использования будет выброшено исключение
-  
+
+
+
+  require_relative 'rule'
+  require_relative 'system'
+
   r = Rule.new('x->yy')
   w = 'xxyy'
   puts "Word: #{w}"
@@ -74,10 +79,20 @@ module CoolRubyGem
   puts
   puts
   puts "//////Parsing file part////////"
+
+  base_path = File.join(__dir__, '..', '..', 'Config')
+
   names_f =["BadFile.txt", "GoodFile.txt", "ErrorFile.txt"]
   names_f.each do |name|
     puts "//////Parsing and test '#{name}' file////////"
-    rules_arrays, strings_arrays = parsing(name)
+    file_path = File.join(base_path, name)
+
+    unless File.exist?(file_path)
+      puts "Файл не найден: #{file_path}"
+      next
+    end
+
+    rules_arrays, strings_arrays = parsing(file_path)
 
     rules_arrays.each_with_index do |rules, idx|
       puts "Система #{idx + 1}: { #{rules.join('; ')} }"
@@ -96,6 +111,5 @@ module CoolRubyGem
     puts "Ошибка: #{e.message}"
 
   end
-
 
 end
