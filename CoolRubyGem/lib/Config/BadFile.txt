@@ -1,0 +1,3 @@
+{ ab->a ;  b->e ;  a->b ; }   bbaab   aabbbaa
+{   ab->a ; b->.e ; a->b   ;   }  bbaab   aabbbaa
+{ ba->a ;  bb->b ; ab->e ;  e->.b ;   }   bbaab   aaaa   bbbbb
