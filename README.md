@@ -9,11 +9,10 @@ This interpreter processes strings using Markov algorithm rules. It supports mul
 Rule System Definition
 Each system is enclosed in curly braces with a # prefix:
 
-text
-{
-  rule1;
-  rule2;
-  rule3;
+{\
+  rule1;\
+  rule2;\
+  rule3;\
 }
 
 Rule Syntax
@@ -30,21 +29,21 @@ Newline after each rule is optional but recommended for readability
 
 Complete File Structure
 
-{
- aa -> a;
- bb -> b;
- ab ->. ba;
-}
-word1.1 word1.2...word1.n
+{\
+ aa -> a;\
+ bb -> b;\
+ ab ->. ba;\
+}\
+word1.1 word1.2...word1.n\
 
-{
- a -> ab;
- b -> a;
-}
-word2.1 word2.2...word2.n
+{\
+ a -> ab;\
+ b -> a;\
+}\
+word2.1 word2.2...word2.n\
 
-{
- x -> y;
- x ->. z;
-}
-word3.1 word3.2...word3.n
+{\
+ x -> y;\
+ x ->. z;\
+}\
+word3.1 word3.2...word3.n\
