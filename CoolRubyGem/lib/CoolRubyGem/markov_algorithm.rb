@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module CoolRubyGem
-  # frozen_string_literal: true
   # Скажем, что систему уравнений мы будем обозначать так
   # {
   # ...

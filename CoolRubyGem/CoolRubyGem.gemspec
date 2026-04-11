@@ -2,7 +2,7 @@ Gem::Specification.new do |s|
   s.name        = 'CoolRubyGem'
   s.version     = '0.1.0'
   s.summary     = "Реализация нормальных алгоритмов Маркова"
-  s.authors     = ["pfqyz"] [cite: 1]
+  s.authors     = ["pfqyz"]
   s.files       = Dir["lib/**/*.rb", "bin/*"]
   s.bindir      = 'bin'
   s.executables = ['markov-run']
