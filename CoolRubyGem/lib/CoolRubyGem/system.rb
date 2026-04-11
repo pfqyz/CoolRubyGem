@@ -26,48 +26,110 @@ module CoolRubyGem
       str + '}'
     end
 
-    def step_by_step_solution(word)
+    end
+    def step_by_step_solution(word, max_steps: 1000, max_length: 10000)
+
+      raise "The symbol 'e' appears in the initial word! 'e' is reserved for empty string."  if word.include?('e')
+
       w = word.dup
-      changed = true
-      while changed
+      puts "#{w} ->"
+      steps = 0
+      history = {}
 
-        changed = false
+      while steps < max_steps
 
-        @rules.each do |r|
-          while r.can_be_used?(w)
+        if w.length > max_length
+          puts "Word length exceeded #{max_length}, possible infinite loop."
+          return w
+        end
 
-            w = r.step_by_step_solution(w)
-            return w if (w == "Looping has happened")
-            changed = true
+        if history.key?(w)
+          puts "Loop detected: word '#{w}' already seen."
+          return w
+        end
+        history[w] = true
 
-            return w if r.is_end?
+        applied = false
+        @rules.each do |rule|
+          if rule.can_be_used?(w)
+            new_w = rule.apply(w)
+            steps += 1
+
+            if new_w == w && !rule.is_end?
+              puts "Rule '#{rule.x} -> #{rule.y}' does not change the word, possible infinite loop."
+              return w
+            end
+
+            w = new_w
+            if rule.is_end?
+              puts " #{w}."
+              return w
+            end
+
+            puts " #{w} ->"
+            applied = true
+            break
           end
         end
+
+        break unless applied
+      end
+
+      if steps >= max_steps
+        puts "Maximum steps (#{max_steps}) reached, possible infinite loop."
+      end
+      w
+
+    end
+
+    def result(word, max_steps: 1000, max_length: 10000)
+
+      raise "The symbol 'e' appears in the initial word! 'e' is reserved for empty string."  if word.include?('e')
+
+      w = word.dup
+      steps = 0
+      history = {}
+
+      while steps < max_steps
+        if w.length > max_length
+          puts "Word length exceeded #{max_length}, possible infinite loop."
+          return w
+        end
+
+        if history.key?(w)
+          puts "Loop detected: word '#{w}' already seen."
+          return w
+        end
+        history[w] = true
+
+        applied = false
+        @rules.each do |rule|
+          if rule.can_be_used?(w)
+            new_w = rule.apply(w)
+            steps += 1
+
+            if new_w == w && !rule.is_end?
+              puts "Rule '#{rule.x} -> #{rule.y}' does not change the word, possible infinite loop."
+              return w
+            end
+
+            w = new_w
+            if rule.is_end?
+              return w
+            end
+
+            applied = true
+            break
+          end
+        end
+
+        break unless applied
+      end
+
+      if steps >= max_steps
+        puts "Maximum steps (#{max_steps}) reached, possible infinite loop."
       end
       w
     end
-
-    def result(word)
-      w = word.dup
-      changed = true
-      while changed
-
-        changed = false
-
-        @rules.each do |r|
-          while r.can_be_used?(w)
-
-            w = r.result(w)
-            return w if (w == "Looping has happened")
-            changed = true
-
-            return w if r.is_end?
-          end
-        end
-      end
-      w
-    end
-
-  end
 
 end

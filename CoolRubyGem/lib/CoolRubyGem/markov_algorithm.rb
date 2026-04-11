@@ -24,64 +24,72 @@ module CoolRubyGem
   require_relative 'rule'
   require_relative 'system'
 
-  r = Rule.new('x->yy')
+  require_relative 'rule'
+  require_relative 'system'
+
   w = 'xxyy'
+
+  s = System.new(['y->x', 'x->.yy'])
+  puts "System: #{s}"
   puts "Word: #{w}"
-  puts "Rule: #{r}"
-  puts "Result: #{r.step_by_step_solution(w)}"
-  puts "//////////////"
-  r = Rule.new('e->.yy')
-  puts "Word: #{w}"
-  puts "Rule: #{r}"
-  puts "Result: #{r.step_by_step_solution(w)}"
-  puts "//////////////"
-  r = Rule.new('e->yy')
-  puts "Word: #{w}"
-  puts "Rule: #{r}"
-  puts "Result: #{r.step_by_step_solution(w)}"
+  puts "Result: #{s.step_by_step_solution(w)}"
   puts "//////////////"
 
-  r = Rule.new('e->yy')
-  #w1 = 'yyex' для проверки выбрасывания исключения
+  s = System.new(['x->y', 'y->.x', 'x->.yy'])
+  puts "System: #{s}"
   puts "Word: #{w}"
-  puts "Rule: #{r}"
-  puts "Result: #{r.step_by_step_solution(w)}"
+  puts "Result: #{s.step_by_step_solution(w)}"
   puts "//////////////"
 
-  s = System.new(['y->x','x->.yy'])
+  s = System.new(['x->y', 'e->y', 'x->.yy'])
   puts "System: #{s}"
   puts "Word: #{w}"
   puts "Result: #{s.step_by_step_solution(w)}"
   puts "//////////////"
-  s = System.new(['x->y','y->.x','x->.yy'])
+
+  s = System.new(['x->y', 'y->e', 'x->.yy'])
   puts "System: #{s}"
   puts "Word: #{w}"
   puts "Result: #{s.step_by_step_solution(w)}"
   puts "//////////////"
-  s = System.new(['x->y','e->y','x->.yy'])
-  puts "System: #{s}"
-  puts "Word: #{w}"
-  puts "Result: #{s.step_by_step_solution(w)}"
+
   puts "//////////////"
-  s = System.new(['x->y','y->e','x->.yy'])
-  puts "System: #{s}"
-  puts "Word: #{w}"
-  puts "Result: #{s.step_by_step_solution(w)}"
-  puts "//////////////"
-  puts "//////////////"
+
   system = System.new(['x->y', 'x->.yy'])
   puts system.step_by_step_solution('xxyy')
-
-
-  #s1 = System.new(['x->.y','e->y','x->.yy']) - проверка на правильность слова
 
   puts
   puts
   puts "//////Parsing file part////////"
 
+  # Функция парсинга файла
+  def self.parsing(file_path)
+    content = File.read(file_path, encoding: 'UTF-8')
+    # Удаляем комментарии
+    content = content.gsub(%r{//.*$}, '')
+
+    # Разбиваем на блоки
+    blocks = content.scan(/система:\{(.*?)\}(.*?)(?=\n\s*система:|\z)/m)
+
+    rules_arrays = []
+    strings_arrays = []
+
+    blocks.each do |rules_str, words_str|
+      # Парсим правила
+      rules = rules_str.strip.split(/\s*;\s*/).reject(&:empty?)
+      rules_arrays << rules
+
+      # Парсим слова
+      words = words_str.strip.split(/\s+/).reject(&:empty?)
+      strings_arrays << words
+    end
+
+    [rules_arrays, strings_arrays]
+  end
+
   base_path = File.join(__dir__, '..', '..', 'Config')
 
-  names_f =["BadFile.txt", "GoodFile.txt", "ErrorFile.txt"]
+  names_f = ["BadFile.txt", "GoodFile.txt", "ErrorFile.txt"]
   names_f.each do |name|
     puts "//////Parsing and test '#{name}' file////////"
     file_path = File.join(base_path, name)
@@ -91,24 +99,24 @@ module CoolRubyGem
       next
     end
 
-    rules_arrays, strings_arrays = parsing(file_path)
+    begin
+      rules_arrays, strings_arrays = parsing(file_path)
 
-    rules_arrays.each_with_index do |rules, idx|
-      puts "Система #{idx + 1}: { #{rules.join('; ')} }"
+      rules_arrays.each_with_index do |rules, idx|
+        puts "Система #{idx + 1}: { #{rules.join('; ')} }"
 
-      system = System.new(rules)
+        system = System.new(rules)
 
-      strings_arrays[idx].each do |word|
-        result = system.result(word)
-        puts "  #{word} -> #{result}"
+        strings_arrays[idx].each do |word|
+          result = system.result(word)
+          puts "  #{word} -> #{result}"
+        end
+
+        puts
       end
-
-      puts
+    rescue => e
+      puts "Ошибка: #{e.message}"
     end
-
-  rescue => e
-    puts "Ошибка: #{e.message}"
-
   end
 
 end

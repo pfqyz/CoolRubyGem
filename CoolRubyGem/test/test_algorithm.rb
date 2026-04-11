@@ -19,28 +19,23 @@ class TestRule < Minitest::Test
     assert_equal true, rule.is_end?
   end
 
+  #1 применение правила
   def test_rule_application
     rule = Rule.new('x->yy')
-    result = rule.result('xxyy')
-    assert_equal 'yyyyyy', result
+    result = rule.apply('xxyy')
+    assert_equal 'yyxyy', result
   end
 
   def test_terminal_rule_application
     rule = Rule.new('x->.yy')
-    result = rule.result('xxyy')
+    result = rule.apply('xxyy')
     assert_equal 'yyxyy', result
   end
 
   def test_e_rule
     rule = Rule.new('e->.y')
-    result = rule.result('xx')
+    result = rule.apply('xx')
     assert_equal 'yxx', result
-  end
-
-  def test_e_rule
-    rule = Rule.new('e->y')
-    result = rule.result('xx')
-    assert_equal 'Looping has happened', result
   end
 
   def test_can_be_used

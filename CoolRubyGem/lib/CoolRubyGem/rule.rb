@@ -31,47 +31,21 @@ module CoolRubyGem
       word.match?(@x)
     end
 
-    def step_by_step_solution(word)
+    def apply(word)
 
-      raise "The e symbol appears in the word! Error! Incorrect alphabet!" if word.include?('e')
+      return word unless can_be_used?(word)
 
-      while can_be_used?(word)
-        s = word
-        if @x == 'e' && @y == 'e'
-          return "Looping has happened" unless is_end?
-        elsif @x == 'e'
-          word = @y + word
-          return "Looping has happened" unless is_end?
-        elsif @y == 'e'
-          word = word.sub(/#{@x}/, '')
-        else
-          word = word.sub(/#{@x}/, @y)
-        end
-        s = s + '->' + word
-        puts s
-        break if is_end?
+      if @x == 'e' && @y == 'e'
+        word
+      elsif @x == 'e'
+        @y + word
+      elsif @y == 'e'
+        word.sub(@x, '')
+      else
+        word.sub(@x, @y)
       end
-      word
+
     end
 
-
-    def result(word)
-      raise "The e symbol appears in the word! Error! Incorrect alphabet!" if word.include?('e')
-
-      while can_be_used?(word)
-        if @x == 'e' && @y == 'e'
-          return "Looping has happened" unless is_end?
-        elsif @x == 'e'
-          word = @y + word
-          return "Looping has happened" unless is_end?
-        elsif @y == 'e'
-          word = word.sub(/#{@x}/, '')
-        else
-          word = word.sub(/#{@x}/, @y)
-        end
-        break if is_end?
-      end
-      word
-    end
   end
 end
