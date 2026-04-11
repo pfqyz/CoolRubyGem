@@ -27,13 +27,18 @@ module CoolRubyGem
       end
 
       # Разбиваю по пробелам, удаляю пустые
-      strings = strings_part.strip.split(/\s+/).reject(&:empty?)
-      if strings.empty?
-        raise "Nothing found after rules"
+      if strings_part.include?(',')
+        raw_strings = strings_part.strip.split(',', -1)
+        strings = raw_strings.map(&:strip)
+      else
+        strings = strings_part.strip.split(/\s+/).reject(&:empty?)
       end
 
+      raise "Nothing found after rules" if strings.empty?
+
+      # Проверка строк: пустые строки (пустые слова) допустимы
       strings.each do |str|
-        unless str.match?(/\A[A-Za-z]+\z/)
+        unless str.empty? || str.match?(/\A[A-Za-z]+\z/)
           raise "Invalid string content: #{str} (only letters!)"
         end
       end
@@ -44,5 +49,4 @@ module CoolRubyGem
     [rules_arrays, strings_arrays]
 
   end
-
 end

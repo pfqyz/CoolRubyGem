@@ -17,7 +17,7 @@ class ParseFileTest < Minitest::Test
     expected_strings = [
       ["bbaab", "aabbbaa"],
       ["bbaab", "aabbbaa"],
-      ["bbaab", "aaaa", "bbbbb"]
+      ["bbaab", "aaaa", "", "bbbbb"]
     ]
     assert_equal expected_rules, rules
     assert_equal expected_strings, strings
