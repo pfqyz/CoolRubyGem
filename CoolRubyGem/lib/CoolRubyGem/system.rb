@@ -39,12 +39,12 @@ module CoolRubyGem
       while steps < max_steps
 
         if w.length > max_length
-          puts "Word length exceeded #{max_length}, possible infinite loop."
+          puts "Possible infinite loop"
           return w
         end
 
         if history.key?(w)
-          puts "Loop detected: word '#{w}' already seen."
+          puts "Possible infinite loop"
           return w
         end
         history[w] = true
@@ -56,7 +56,7 @@ module CoolRubyGem
             steps += 1
 
             if new_w == w && !rule.is_end?
-              puts "Rule '#{rule.x} -> #{rule.y}' does not change the word, possible infinite loop."
+              puts "Possible infinite loop"
               return w
             end
 
@@ -76,7 +76,7 @@ module CoolRubyGem
       end
 
       if steps >= max_steps
-        puts "Maximum steps (#{max_steps}) reached, possible infinite loop."
+        puts "Possible infinite loop"
       end
       w
 
@@ -92,12 +92,12 @@ module CoolRubyGem
 
       while steps < max_steps
         if w.length > max_length
-          puts "Word length exceeded #{max_length}, possible infinite loop."
+          puts "Possible infinite loop"
           return w
         end
 
         if history.key?(w)
-          puts "Loop detected: word '#{w}' already seen."
+          puts "Possible infinite loop"
           return w
         end
         history[w] = true
@@ -109,7 +109,7 @@ module CoolRubyGem
             steps += 1
 
             if new_w == w && !rule.is_end?
-              puts "Rule '#{rule.x} -> #{rule.y}' does not change the word, possible infinite loop."
+              puts "Possible infinite loop"
               return w
             end
 
@@ -127,7 +127,7 @@ module CoolRubyGem
       end
 
       if steps >= max_steps
-        puts "Maximum steps (#{max_steps}) reached, possible infinite loop."
+        puts "Possible infinite loop"
       end
       w
     end

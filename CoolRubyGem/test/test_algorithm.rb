@@ -60,9 +60,9 @@ class TestRule < Minitest::Test
   end
 
   def test_system_without_end_rule
-    system = System.new(['x->y', 'x->yy'])
+    system = System.new(['x->yy','x->y'])
     result = system.result('xxyy')
-    assert_equal 'yyyy', result
+    assert_equal 'yyyyyy', result
   end
 
   def test_system_with_e_rule
