@@ -24,9 +24,6 @@ module CoolRubyGem
   require_relative 'rule'
   require_relative 'system'
 
-  require_relative 'rule'
-  require_relative 'system'
-
   w = 'xxyy'
 
   s = System.new(['y->x', 'x->.yy'])

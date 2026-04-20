@@ -25,7 +25,7 @@ module CoolRubyGem
       end
       str + '}'
     end
-    
+
     def step_by_step_solution(word, max_steps: 1000, max_length: 10000)
 
       raise "The symbol 'e' appears in the initial word! 'e' is reserved for empty string."  if word.include?('e')
